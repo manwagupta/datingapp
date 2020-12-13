@@ -13,7 +13,10 @@
                     <a class="nav-link" routerLink='/messages' tabindex="-1" routerLinkActive='active'>Messages</a>
                 </li>
             </ng-container>
-        </ul>
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/errors' tabindex="-1" routerLinkActive='active'>Messages</a>
+            </li>
+        </ul>-
         <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm"
             class="form-inline mt-2 mt-md-0" (ngSubmit)="Login()">
             <input [(ngModel)]="model.username" name="username" class="form-control mr-sm-2" type="text"
