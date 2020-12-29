@@ -17,7 +17,7 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [{ path: 'members', component: MemberlistComponent, canActivate: [AuthGuard] },
-    { path: 'members/:id', component: MemberdetailComponent },
+    { path: 'members/:username', component: MemberdetailComponent },
     { path: 'lists', component: ListsComponent },
     { path: 'messages', component: MessagesComponent }]
   },
