@@ -15,7 +15,7 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context, ITokenService tokenService)
+        public AccountController(DataContext context, ITokenService tokenService, IMapper mapper)
         {
             _tokenService = tokenService;
             _context = context;
@@ -25,6 +25,9 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Register(RegisterUser registerDTO)
         {
             if (await UserExists(registerDTO.UserName.ToLower())) return BadRequest("Username already exists");
+
+var User
+
             using var hmac = new HMACSHA512();
             var user = new AppUsers
             {

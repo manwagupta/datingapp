@@ -5,31 +5,24 @@
     </h2>
     <hr>
     <div class="form-group">
-        <input [class.is-invalid]='registerForms.get("username").errors 
-        && registerForms.get("username").touched'
-        type="text" 
-        class="form-control" 
-        formControlName="username" 
-        placeholder="Username" >
-        <div class="invalid-feedback">Please enter a username</div>
+        <label style="margin-right: 10px;" class="control-label">I am a</label>
+        <label class="radio-inline">
+            <input type="radio" value="male" formControlName='gender'>Male
+        </label>
+        <label class="radio-inline">
+            <input type="radio" value="female" formControlName='gender' class="ml-3">Female
+        </label>
+
     </div>
-    <div class="form-group">
-        <input 
-        [class.is-invalid]='registerForms.get("password").errors 
-        && registerForms.get("password").touched'
-        type="password" class="form-control" formControlName="password" placeholder="Password">
-        <div *ngIf="registerForms.get('password').hasError('required')" class="invalid-feedback">Please enter a password</div>
-        <div *ngIf="registerForms.get('password').hasError('minlength')" class="invalid-feedback">Password must be at least 4 characters </div>
-        <div *ngIf="registerForms.get('password').hasError('maxlength')" class="invalid-feedback">Password must be at most 8 characters</div>
-    </div>
-    <div class="form-group">
-        <input
-        [class.is-invalid]='registerForms.get("confirmPassword").errors 
-        && registerForms.get("confirmPassword").touched' 
-        type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password">
-        <div *ngIf="registerForms.get('confirmPassword').hasError('required')" class="invalid-feedback">Please enter a confirm password</div>
-        <div *ngIf="registerForms.get('confirmPassword').hasError('isMatching')" class="invalid-feedback">Confirm password must be same as password </div>
-    </div>
+    <app-text-inputs [formControl]='registerForms.controls["username"]' [label]='"Username"'></app-text-inputs>
+    <app-text-inputs [formControl]='registerForms.controls["knownAs"]' [label]='"Known As"'></app-text-inputs>
+    <app-date-input [formControl]='registerForms.controls["dateOfBirth"]' [maxDate]='maxDate' [label]='"Date Of Birth"'></app-date-input>
+    <app-text-inputs [formControl]='registerForms.controls["city"]' [label]='"City"'></app-text-inputs>
+    <app-text-inputs [formControl]='registerForms.controls["country"]' [label]='"Country"'></app-text-inputs>
+    <app-text-inputs [formControl]='registerForms.controls["password"]' [label]='"Password"' [type]='"password"'>
+    </app-text-inputs>
+    <app-text-inputs [formControl]='registerForms.controls["confirmPassword"]' [label]='"ConfirmPassword"'
+        [type]='"password"'></app-text-inputs>
     <div class="forms-group text-center">
         <button class="btn btn-success mr-2" type="submit">Register</button>
         <button class="btn btn-default mr-2" type="button" (click)="cancel()">Cancel</button>

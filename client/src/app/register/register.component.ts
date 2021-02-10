@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_Services/account.service';
 
@@ -12,18 +12,26 @@ export class RegisterComponent implements OnInit {
   model: any = {};
   @Output() cancelRegister = new EventEmitter()
   registerForms: FormGroup;
+  maxDate:Date;
 
-  constructor(private accountService: AccountService, private toastr: ToastrService) { }
+  constructor(private accountService: AccountService, private toastr: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.InitializeForm();
+    this.maxDate= new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() -18);
   }
 
   InitializeForm(){
-    this.registerForms =  new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('',[Validators.required,Validators.minLength(4),Validators.maxLength(8)]),
-      confirmPassword: new FormControl('',[Validators.required,this.matchValues('password')])
+    this.registerForms = this.fb.group({
+      gender: ['male'],
+      username: ['', Validators.required],
+      knownAs: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      password: ['',[Validators.required,Validators.minLength(4),Validators.maxLength(8)]],
+      confirmPassword: ['',[Validators.required,this.matchValues('password')]]
     });
   }
 
