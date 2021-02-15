@@ -1,5 +1,5 @@
 <!-- <form #registerForm="ngForm" (ngSubmit)="regsiter()" autocomplete="off"> -->
-<form [formGroup]="registerForms" (ngSubmit)="regsiter()" autocomplete="off">
+<form [formGroup]="registerForms" (ngSubmit)="registerForms.valid && regsiter()" autocomplete="off">
     <h2 class="text-center text-primary">
         Sign Up
     </h2>
@@ -16,17 +16,24 @@
     </div>
     <app-text-inputs [formControl]='registerForms.controls["username"]' [label]='"Username"'></app-text-inputs>
     <app-text-inputs [formControl]='registerForms.controls["knownAs"]' [label]='"Known As"'></app-text-inputs>
-    <app-date-input [formControl]='registerForms.controls["dateOfBirth"]' [maxDate]='maxDate' [label]='"Date Of Birth"'></app-date-input>
+    <app-date-input [formControl]='registerForms.controls["dateOfBirth"]' [maxDate]='maxDate' [label]='"Date Of Birth"'>
+    </app-date-input>
     <app-text-inputs [formControl]='registerForms.controls["city"]' [label]='"City"'></app-text-inputs>
     <app-text-inputs [formControl]='registerForms.controls["country"]' [label]='"Country"'></app-text-inputs>
     <app-text-inputs [formControl]='registerForms.controls["password"]' [label]='"Password"' [type]='"password"'>
     </app-text-inputs>
     <app-text-inputs [formControl]='registerForms.controls["confirmPassword"]' [label]='"ConfirmPassword"'
         [type]='"password"'></app-text-inputs>
+
+    <div class="row" *ngIf="validationerrors.length > 0">
+        <ul class="text-danger">
+            <li *ngFor="let error of validationerrors">
+                {{error}}
+            </li>
+        </ul>
+    </div>
     <div class="forms-group text-center">
-        <button class="btn btn-success mr-2" type="submit">Register</button>
+        <button [disabled]="!registerForms.valid" class="btn btn-success mr-2" type="submit">Register</button>
         <button class="btn btn-default mr-2" type="button" (click)="cancel()">Cancel</button>
     </div>
 </form>
-<p>Form Value : {{registerForms.value | json}}</p>
-<p>Form Status : {{registerForms.status | json}}</p>
