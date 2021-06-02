@@ -24,13 +24,18 @@ export class ErrorInterceptor implements HttpInterceptor {
               if (error.error.errors) {
                 const modalStateErrors = [];
                 for (const key in error.error.errors) {
-                  modalStateErrors.push(error.error.errors[key]);
+                  if (error.error.errors[key]) {
+                    modalStateErrors.push(error.error.errors[key]);
+                  }
                 }
                 throw modalStateErrors.flat();
               }
-              else {
+              else if (typeof (error.error) === 'object') {
                 this.toaster.error(error.statusText, error.status);
+              } else {
+                this.toaster.error(error.error, error.status);
               }
+
               break;
             case 401:
               this.toaster.error(error.statusText, error.status);
@@ -41,7 +46,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             case 500:
               const navigationExtras: NavigationExtras = { state: { error: error.error } }
               this.router.navigateByUrl('/server-error', navigationExtras);
-              break;              
+              break;
             default:
               this.toaster.error('Something unexpectd went wrong');
               console.log(error);

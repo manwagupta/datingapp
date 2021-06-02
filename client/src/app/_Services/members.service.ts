@@ -29,17 +29,15 @@ export class MembersService {
     })
   }
 
-  getUserParams()
-  {
+  getUserParams() {
     return this.userparams;
   }
 
-  setUserParams(params: UserParams)
-  {
+  setUserParams(params: UserParams) {
     this.userparams = params;
   }
 
-  resetUserParams(){
+  resetUserParams() {
     this.userparams = new UserParams(this.user);
     return this.userparams;
   }
@@ -87,9 +85,9 @@ export class MembersService {
     const member = [...this.memberCache.values()]
       .reduce((arr, element) => arr.concat(element.result), []).
       find((member: Member) => member.username === username);
-      if(member){
-        return of(member);
-      }
+    if (member) {
+      return of(member);
+    }
     return this.httpClient.get<Member>(this.baseUrl + 'users/' + username);
   }
 
@@ -108,5 +106,16 @@ export class MembersService {
 
   deletePhoto(photoId: Number) {
     return this.httpClient.delete(this.baseUrl + 'users/delete-photo/' + photoId, {});
+  }
+
+  addLike(userName: string)
+  {
+    return this.httpClient.post(this.baseUrl + "likes/" + userName, {})
+  }
+
+  getLikes(predicate: string, pageNumber, pageSize) {
+    let params = this.getPaginationHeaders(pageNumber,pageSize);
+    params = params.append('predicate', predicate);
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl+'likes',params)
   }
 }
